@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<header class="header">
+    <h1>Здесь представлена мини-реализация очереди!</h1>
+</header>
+<div class="input__items">
+    <input id="addQueue" type="text" placeholder="Введите что-нибудь">
+    <input class="input__btn" id="btnEnqueue" type="submit" value="Добавить в очередь" onclick="addItemQueue()">
+    <input class="input__btn" id="btnDequeue" type="submit" value="Удалить из очереди первый элемент" onclick="removeItemQueue()">
+    <input class="input__btn" id="btnShowSize" type="submit" value="Показать длину очереди" onclick="showSizeQueue()">
+</div>
+    <div id="queue" class="queue">
+    <span>Очередь пуста!</span>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
