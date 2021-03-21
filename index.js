@@ -50,7 +50,7 @@ function addItemQueue(){
 
 
     var text = document.getElementById('addQueue').value;
-    if(text != 0){
+    if(text !== null){
         newQueue.enqueue(text);
     } else {
         alert('Вы ничего не ввели!')
