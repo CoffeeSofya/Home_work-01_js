@@ -32,22 +32,34 @@ Queue.prototype.dequeue = function() {
 
 
 
+function addTegToHtml() {
+    let queue = document.getElementById('queue');
+	let firstLi = queue.getElementsByTagName('span')[0];
+    for (let value of Object.values(newQueue._storage)) {
+        let el = document.createElement('span');
+        el.className = 'queue__class';
+        el.innerText = value;
+        queue.insertBefore(el, firstLi);
+    }
+}
 
-
-let newQueue = new Queue();
+function removeTegFromHtml() {
+    const span = document.querySelectorAll('span');
+    for (let checkbox of span) {
+      checkbox.remove();
+    }
+}
 
 function clearInput() {
     document.querySelector("input").value = '';
 }
 
 
+
+
+let newQueue = new Queue();
 function addItemQueue(){
-
-    const list = document.querySelectorAll('span');
-    for (let checkbox of list) {
-      checkbox.remove();
-    }
-
+    removeTegFromHtml();
 
     var text = document.getElementById('addQueue').value;
     if(text !== null){
@@ -56,47 +68,14 @@ function addItemQueue(){
         alert('Вы ничего не ввели!')
     }
 
-    // Добавление в body
-    // let body = document.querySelector('body');
-    // for (let value of Object.values(newQueue._storage)) {
-    //     let el = document.createElement('span');
-    //     el.className = 'queue-class';
-    //     el.innerText = value;
-    //     body.appendChild(el);
-    // }
-
-
-    //Добавление в класс с id='queue'
-	let queue = document.getElementById('queue')
-	let firstLi = queue.getElementsByTagName('span')[0]
-    for (let value of Object.values(newQueue._storage)) {
-        let el = document.createElement('span');
-        el.className = 'queue__class';
-        el.innerText = value;
-        queue.insertBefore(el, firstLi);
-    }
-
+    addTegToHtml();
     clearInput();
-
 }
 
 function removeItemQueue(){
-    const list = document.querySelectorAll('span');
-    for (let checkbox of list) {
-      checkbox.remove();
-    }
-    var text = document.getElementById('addQueue').value;
-    newQueue.dequeue(text);
-
-	let queue = document.getElementById('queue')
-	let firstLi = queue.getElementsByTagName('span')[0]
-    for (let value of Object.values(newQueue._storage)) {
-        let el = document.createElement('span');
-        el.className = 'queue__class';
-        el.innerText = value;
-        queue.insertBefore(el, firstLi);
-    }
-
+    removeTegFromHtml();
+    newQueue.dequeue();
+    addTegToHtml();
 }
 
 function showSizeQueue(){
