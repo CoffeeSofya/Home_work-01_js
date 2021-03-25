@@ -16,7 +16,7 @@ Queue.prototype.enqueue = function(data) {
 };
  
 Queue.prototype.dequeue = function() {
-    var oldestIndex = this._oldestIndex,
+    let oldestIndex = this._oldestIndex,
         newestIndex = this._newestIndex,
         deletedData;
  
@@ -28,6 +28,43 @@ Queue.prototype.dequeue = function() {
         return deletedData;
     }
 };
+
+
+
+
+
+
+
+//redefining the console
+var console = (function(oldCons, time){
+    return {
+        log: function(text){
+            oldCons.log( getCurrentDate.apply(null, time), text );
+        },
+        info: function (text) {
+            oldCons.info( getCurrentDate.apply(null, time), text );   
+        },
+        warn: function (text) {
+            oldCons.warn( getCurrentDate.apply(null, time), text );   
+        },
+        error: function (text) {
+            oldCons.error( getCurrentDate.apply(null, time), text );
+        }
+    };
+}(window.console));
+
+window.console = console;
+
+
+function getCurrentDate() {
+    var data = new Date();  
+    var time  = data.getHours() + ":" +  data.getMinutes() + ":" +  data.getSeconds() + " " +
+    data.getDate() + '/' + data.getMonth() + '/' + data.getFullYear();
+    return time;       
+}
+
+
+
 
 
 
@@ -58,17 +95,21 @@ function clearInput() {
 
 
 let newQueue = new Queue();
+
 function addItemQueue(){
     removeTegFromHtml();
 
-    var text = document.getElementById('addQueue').value;
-    if(text !== null){
+    let text = document.getElementById('addQueue').value;
+    if(text !== ''){
         newQueue.enqueue(text);
+        console.log('Добавление элемента ' + '\'' + text + '\'' + ' в очередь!');
     } else {
-        alert('Вы ничего не ввели!')
+        alert('Вы ничего не ввели!');
+        console.log('Попытка добавить пустую строку!');
     }
 
     addTegToHtml();
+
     clearInput();
 }
 
@@ -76,8 +117,11 @@ function removeItemQueue(){
     removeTegFromHtml();
     newQueue.dequeue();
     addTegToHtml();
+    console.log('Удаление первого элемента из очереди!');
 }
 
 function showSizeQueue(){
-    alert( 'Длина очереди: ' + newQueue.size());
+    let currentSize = newQueue.size();
+    alert( 'Длина очереди: ' + currentSize);
+    console.log('Запрос на длину очереди! Длина очереди: ' + currentSize);
 }
