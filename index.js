@@ -36,7 +36,7 @@ Queue.prototype.dequeue = function() {
 
 
 //redefining the console
-var console = (function(oldCons, time){
+let console = (function(oldCons, time){
     return {
         log: function(text){
             oldCons.log( getCurrentDate.apply(null, time), text );
@@ -57,9 +57,13 @@ window.console = console;
 
 
 function getCurrentDate() {
-    var data = new Date();  
-    var time  = data.getHours() + ":" +  data.getMinutes() + ":" +  data.getSeconds() + " " +
-    data.getDate() + '/' + data.getMonth() + '/' + data.getFullYear();
+    let data = new Date();  
+    let time  = ('0' + data.getHours()).slice(-2) + ":" +  
+                ('0' + data.getMinutes()).slice(-2) + ":" +  
+                ('0' + data.getSeconds()).slice(-2) + " " +
+                ('0' + data.getDate()).slice(-2) + '/' + 
+                ('0' + ( data.getMonth() + 1 )).slice(-2) + '/' + 
+                ('0' + data.getFullYear()).slice(-2);
     return time;       
 }
 
@@ -71,12 +75,12 @@ function getCurrentDate() {
 
 function addTegToHtml() {
     let queue = document.getElementById('queue');
-	let firstLi = queue.getElementsByTagName('span')[0];
+	let firstSpan = queue.getElementsByTagName('span')[0];
     for (let value of Object.values(newQueue._storage)) {
-        let el = document.createElement('span');
-        el.className = 'queue__class';
-        el.innerText = value;
-        queue.insertBefore(el, firstLi);
+        let newTagSpan = document.createElement('span');
+        newTagSpan.className = 'queue__class';
+        newTagSpan.innerText = value;
+        queue.insertBefore(newTagSpan, firstSpan);
     }
 }
 
@@ -100,7 +104,7 @@ function addItemQueue(){
     removeTegFromHtml();
 
     let text = document.getElementById('addQueue').value;
-    if(text !== ''){
+    if(text !== null && text !==''){
         newQueue.enqueue(text);
         console.log('Добавление элемента ' + '\'' + text + '\'' + ' в очередь!');
     } else {
