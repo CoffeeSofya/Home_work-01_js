@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 function Queue() {
     this._oldestIndex = 1;
@@ -74,20 +74,28 @@ function getCurrentDate() {
 
 
 function addTegToHtml() {
-    let queue = document.getElementById('queue');
-	let firstSpan = queue.getElementsByTagName('span')[0];
-    for (let value of Object.values(newQueue._storage)) {
-        let newTagSpan = document.createElement('span');
-        newTagSpan.className = 'queue__class';
-        newTagSpan.innerText = value;
-        queue.insertBefore(newTagSpan, firstSpan);
+    try{
+        let queue = document.getElementById('queue');
+        let firstSpan = queue.getElementsByTagName('span')[0];
+        for (let value of Object.values(newQueue._storage)) {
+            let newTagSpan = document.createElement('span');
+            newTagSpan.className = 'queue__class';
+            newTagSpan.innerText = value;
+            queue.insertBefore(newTagSpan, firstSpan);
+        }
+    } catch(e) {
+        console.log(e);
     }
 }
 
 function removeTegFromHtml() {
-    const span = document.querySelectorAll('span');
-    for (let checkbox of span) {
-      checkbox.remove();
+    try {
+        const span = document.querySelectorAll('span');
+        for (let checkbox of span) {
+             checkbox.remove();
+        }
+    } catch(e) {
+        console.log(e);
     }
 }
 
@@ -103,13 +111,17 @@ let newQueue = new Queue();
 function addItemQueue(){
     removeTegFromHtml();
 
-    let text = document.getElementById('addQueue').value;
-    if(text !== null && text !==''){
-        newQueue.enqueue(text);
-        console.log('Добавление элемента ' + '\'' + text + '\'' + ' в очередь!');
-    } else {
-        alert('Вы ничего не ввели!');
-        console.log('Попытка добавить пустую строку!');
+    try {
+        let text = document.getElementById('addQueue').value;
+        if(text !== null && text !== ''){
+            newQueue.enqueue(text);
+            console.log('Добавление элемента ' + '\'' + text + '\'' + ' в очередь!');
+        } else {
+            alert('Вы ничего не ввели!');
+            console.log('Попытка добавить пустую строку!');
+        }
+    }  catch(e) {
+        console.log(e);
     }
 
     addTegToHtml();
