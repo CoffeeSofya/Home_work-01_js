@@ -1,38 +1,47 @@
 "use strict";
 
-function Queue() {
-    this._oldestIndex = 1;
-    this._newestIndex = 1;
-    this._storage = {};
-}
- 
-Queue.prototype.size = function() {
-    return this._newestIndex - this._oldestIndex;
-};
- 
-Queue.prototype.enqueue = function(data) {
-    this._storage[this._newestIndex] = data;
-    this._newestIndex++;
-};
- 
-Queue.prototype.dequeue = function() {
-    let oldestIndex = this._oldestIndex,
-        newestIndex = this._newestIndex,
-        deletedData;
- 
-    if (oldestIndex !== newestIndex) {
-        deletedData = this._storage[oldestIndex];
-        delete this._storage[oldestIndex];
-        this._oldestIndex++;
- 
-        return deletedData;
+class Queue {
+    constructor() {
+        this._oldestIndex = 1;
+        this._newestIndex = 1;
+        this._storage = {};
     }
-};
+    size() {
+        try {
+            let currentSize = this._newestIndex - this._oldestIndex;
+            console.log('Запрос на длину очереди! Длина очереди: ' + currentSize);
+            return currentSize;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    enqueue(data) {
+        try {
+            this._storage[this._newestIndex] = data;
+            this._newestIndex++;
+            console.log('Добавление элемента ' + '\'' + data + '\'' + ' в очередь!');
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    dequeue() {
+        let oldestIndex = this._oldestIndex,
+            newestIndex = this._newestIndex,
+            deletedData;
+        try {
+            if (oldestIndex !== newestIndex) {
+                deletedData = this._storage[oldestIndex];
+                delete this._storage[oldestIndex];
+                this._oldestIndex++;
+                console.log('Удаление первого элемента из очереди!');
 
-
-
-
-
+                return deletedData;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
 
 
 //redefining the console
@@ -68,34 +77,21 @@ function getCurrentDate() {
 }
 
 
-
-
-
-
-
 function addTegToHtml() {
-    try{
-        let queue = document.getElementById('queue');
-        let firstSpan = queue.getElementsByTagName('span')[0];
-        for (let value of Object.values(newQueue._storage)) {
-            let newTagSpan = document.createElement('span');
-            newTagSpan.className = 'queue__class';
-            newTagSpan.innerText = value;
-            queue.insertBefore(newTagSpan, firstSpan);
-        }
-    } catch(e) {
-        console.log(e);
+    let queue = document.getElementById('queue');
+    let firstSpan = queue.getElementsByTagName('span')[0];
+    for (let value of Object.values(newQueue._storage)) {
+        let newTagSpan = document.createElement('span');
+        newTagSpan.className = 'queue__class';
+        newTagSpan.innerText = value;
+        queue.insertBefore(newTagSpan, firstSpan);
     }
 }
 
 function removeTegFromHtml() {
-    try {
-        const span = document.querySelectorAll('span');
-        for (let checkbox of span) {
-             checkbox.remove();
-        }
-    } catch(e) {
-        console.log(e);
+    const span = document.querySelectorAll('span');
+    for (let checkbox of span) {
+         checkbox.remove();
     }
 }
 
@@ -104,26 +100,18 @@ function clearInput() {
 }
 
 
-
-
 let newQueue = new Queue();
 
 function addItemQueue(){
     removeTegFromHtml();
 
-    try {
-        let text = document.getElementById('addQueue').value;
-        if(text !== null && text !== ''){
-            newQueue.enqueue(text);
-            console.log('Добавление элемента ' + '\'' + text + '\'' + ' в очередь!');
-        } else {
-            alert('Вы ничего не ввели!');
-            console.log('Попытка добавить пустую строку!');
-        }
-    }  catch(e) {
-        console.log(e);
+    let text = document.getElementById('addQueue').value;
+    if(text !== null && text !== ''){
+        newQueue.enqueue(text);
+    } else {
+        alert('Вы ничего не ввели!');
+        console.log('Попытка добавить пустую строку!');
     }
-
     addTegToHtml();
 
     clearInput();
@@ -133,11 +121,9 @@ function removeItemQueue(){
     removeTegFromHtml();
     newQueue.dequeue();
     addTegToHtml();
-    console.log('Удаление первого элемента из очереди!');
 }
 
 function showSizeQueue(){
     let currentSize = newQueue.size();
     alert( 'Длина очереди: ' + currentSize);
-    console.log('Запрос на длину очереди! Длина очереди: ' + currentSize);
 }
